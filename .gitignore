@@ -100,3 +100,4 @@ MANIFEST-*
 
 # Temporary Makefile.config change
 _tmp_*
+nfs_data*
