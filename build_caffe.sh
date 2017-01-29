@@ -55,14 +55,32 @@ perl -i.bak -pe 's@`#=LNCMB=#`@\\\n@g' _tmp_Makefile.config
 
 # Add some additional configs to the end
 [ "${OS}" == "darwin" ] || quit_with "only support OSX for the moment"
-brew install gflags glog pkg-config
-#brew install boost --c++11
-brew install boost-python --c++11 --with-python3 --without-python
-brew install hdf5 --c++11
-brew install protobuf --c++11 --devel
+function get_pkg { 
+    local _pkg="$1"; shift;
+    local _opt="$@"
+    set -ex
+    if [ -n "${_opt}" ]; then
+        brew upgrade "${_pkg}" \
+            || brew install "${_pkg}" "${_opt}" \
+            || brew reinstall "${_pkg}" "${_opt}"
+    else
+        brew upgrade "${_pkg}" \
+            || brew install "${_pkg}" \
+            || brew reinstall "${_pkg}"
+    fi
+    unset
+}
+function get_pkgs { 
+    for _i_pkg in $@; do get_pkg "${_i_pkg}"; done; 
+}
+get_pkgs gflags glog pkg-config
+#get_pkg boost --c++11
+get_pkg boost-python --c++11 --with-python3 --without-python
+get_pkg hdf5 --c++11
+get_pkg protobuf --c++11 --devel
 brew tap homebrew/science
-brew install openblas tbb
-brew install opencv3 --with-opengl --with-qt5 --with-tbb --with-java --c++11 --with-python3
+get_pkgs openblas tbb
+get_pkg opencv3 --with-opengl --with-qt5 --with-tbb --with-java --c++11 --with-python3
 
 numpy_core_root="$(dirname "$(python3 -c 'import numpy.core; print(numpy.core.__file__)')")"
 py3_root="$(python3-config --prefix)"
