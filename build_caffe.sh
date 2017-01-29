@@ -29,7 +29,7 @@ function del_build_option() {
 set_build_option "CPU_ONLY" "1"
 set_build_option "USE_LMDB" "1"
 set_build_option "USE_LEVELDB" "0"
-set_build_option "BLAS" "openblas"
+set_build_option "BLAS" "open"
 set_build_option "OPENCV_VERSION" "3"
 set_build_option "CUSTOM_CXX" "clang++"
 set_build_option "WITH_PYTHON_LAYER" "1"
@@ -97,8 +97,8 @@ PYTHON_LIBRARIES := boost_python3 ${py3_libname}
 PYTHON_INCLUDE := ${py3_incs}
 PYTHON_LIB := ${py3_libs}
 
-INCLUDE_DIRS := ${py3_incs} $(brew --prefix)/include ${cv3_root}/include
-LIBRARY_DIRS := ${py3_libs} $(brew --prefix)/lib ${cv3_root}/lib $(brew --prefix boost-python)/lib
+INCLUDE_DIRS := ${py3_incs} $(brew --prefix)/include $(brew --prefix openblas)/include ${cv3_root}/include
+LIBRARY_DIRS := ${py3_libs} $(brew --prefix)/lib $(brew --prefix openblas)/lib ${cv3_root}/lib $(brew --prefix boost-python)/lib
 EOF
 
 
