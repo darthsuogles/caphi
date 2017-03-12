@@ -74,12 +74,11 @@ function get_pkgs {
     for _i_pkg in $@; do get_pkg "${_i_pkg}"; done; 
 }
 get_pkgs gflags glog pkg-config
-#get_pkg boost --c++11
 get_pkg boost-python --c++11 --with-python3 --without-python
 get_pkg hdf5 --c++11
 get_pkg protobuf --c++11 --devel
 brew tap homebrew/science
-get_pkgs openblas tbb
+get_pkgs openblas tbb lmdb
 get_pkg opencv3 --with-opengl --with-qt5 --with-tbb --with-java --c++11 --with-python3
 
 numpy_core_root="$(dirname "$(python3 -c 'import numpy.core; print(numpy.core.__file__)')")"
@@ -93,7 +92,7 @@ py3_libname="$(python3-config --libs | perl -ne 'print $1 if /-l(python[^\s]*)(\
 
 cat <<EOF >> _tmp_Makefile.config
 # Additional libraries and include dirs
-PYTHON_LIBRARIES := boost_python3 ${py3_libname}
+PYTHON_LIBRARIES := boost_python ${py3_libname}
 PYTHON_INCLUDE := ${py3_incs}
 PYTHON_LIB := ${py3_libs}
 
