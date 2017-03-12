@@ -92,7 +92,7 @@ py3_libname="$(python3-config --libs | perl -ne 'print $1 if /-l(python[^\s]*)(\
 
 cat <<EOF >> _tmp_Makefile.config
 # Additional libraries and include dirs
-PYTHON_LIBRARIES := boost_python ${py3_libname}
+PYTHON_LIBRARIES := boost_python3-mt boost_numpy3-mt ${py3_libname}
 PYTHON_INCLUDE := ${py3_incs}
 PYTHON_LIB := ${py3_libs}
 
