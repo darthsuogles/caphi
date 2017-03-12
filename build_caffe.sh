@@ -106,3 +106,7 @@ mv _tmp_Makefile.config Makefile.config
 rm -f _tmp_Makefile.config.bak
 make all -j32
 DISTRIBUTE_DIR=$PWD/install_dir make distribute
+
+# Install python packages
+brew install matplotlib --without-python --with-python3
+pip3 install -U numpy scipy scikit-image protobuf
